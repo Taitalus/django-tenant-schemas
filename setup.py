@@ -11,7 +11,7 @@ except ImportError:
 
 setup(
     name='tenant-schemas',
-    version='1.0',
+    version='1.2',
     author='Raju Ahmed Shetu',
     author_email='shetu2153@gmail.com',
     packages=[
@@ -42,7 +42,7 @@ setup(
         "Topic :: Software Development :: Libraries",
     ],
     install_requires=[
-        'Django >= 1.8.0',
+        'Django',
         'psycopg2-binary',
     ],
     zip_safe=False,
