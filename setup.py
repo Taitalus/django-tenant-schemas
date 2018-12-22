@@ -12,8 +12,8 @@ except ImportError:
 setup(
     name='django-tenant-schemas',
     version=get_git_version(),
-    author='Bernardo Pires Carneiro',
-    author_email='carneiro.be@gmail.com',
+    author='Raju Ahmed Shetu',
+    author_email='shetu2153@gmail.com',
     packages=[
         'tenant_schemas',
         'tenant_schemas.migration_executors',
@@ -25,7 +25,7 @@ setup(
         'tenant_schemas.tests',
     ],
     scripts=[],
-    url='https://github.com/bcarneiro/django-tenant-schemas',
+    url='https://github.com/Taitalus/django-tenant-schemas',
     license='MIT',
     description='Tenant support for Django using PostgreSQL schemas.',
     long_description=open('README.rst').read() if exists("README.rst") else "",
