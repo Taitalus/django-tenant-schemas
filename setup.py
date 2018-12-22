@@ -10,7 +10,7 @@ except ImportError:
     from distutils.core import setup
 
 setup(
-    name='django-tenant-schemas',
+    name='tenant-schemas',
     version=get_git_version(),
     author='Raju Ahmed Shetu',
     author_email='shetu2153@gmail.com',
