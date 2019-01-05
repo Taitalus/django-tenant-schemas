@@ -11,7 +11,7 @@ from tenant_schemas.utils import get_public_schema_name, get_limit_set_calls
 from tenant_schemas.postgresql_backend.introspection import DatabaseSchemaIntrospection
 
 
-ORIGINAL_BACKEND = getattr(settings, 'ORIGINAL_BACKEND', 'django.db.backends.postgresql_psycopg2')
+ORIGINAL_BACKEND = getattr(settings, 'ORIGINAL_BACKEND', 'django.contrib.gis.db.backends.postgis')
 # Django 1.9+ takes care to rename the default backend to 'django.db.backends.postgresql'
 original_backend = django.db.utils.load_backend(ORIGINAL_BACKEND)
 
