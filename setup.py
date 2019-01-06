@@ -11,7 +11,7 @@ except ImportError:
 
 setup(
     name='tenant-schemas',
-    version='1.3',
+    version='1.4',
     author='Raju Ahmed Shetu',
     author_email='shetu2153@gmail.com',
     packages=[
@@ -27,7 +27,7 @@ setup(
     scripts=[],
     url='https://github.com/Taitalus/django-tenant-schemas',
     license='MIT',
-    description='Support for postgis added',
+    description='Remove postgis as original backend and added search_set support',
     long_description=open('README.rst').read() if exists("README.rst") else "",
     classifiers=[
         'License :: OSI Approved :: MIT License',
