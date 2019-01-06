@@ -37,6 +37,18 @@ def tenant_context(tenant):
         else:
             connection.set_tenant(previous_tenant)
 
+@contextmanager
+def with_custom_search_path(search_path):
+    previous_tenant = connection.tenant
+    try:
+        connection.set_search_path(search_path)
+        yield
+    finally:
+        if previous_tenant is None:
+            connection.set_schema_to_public()
+        else:
+            connection.set_tenant(previous_tenant)
+
 
 def get_tenant_model():
     return get_model(*settings.TENANT_MODEL.split("."))

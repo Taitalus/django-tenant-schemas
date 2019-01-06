@@ -11,7 +11,7 @@ from tenant_schemas.utils import get_public_schema_name, get_limit_set_calls
 from tenant_schemas.postgresql_backend.introspection import DatabaseSchemaIntrospection
 
 
-ORIGINAL_BACKEND = getattr(settings, 'ORIGINAL_BACKEND', 'django.contrib.gis.db.backends.postgis')
+ORIGINAL_BACKEND = getattr(settings, 'ORIGINAL_BACKEND', 'django.db.backends.postgresql_psycopg2')
 # Django 1.9+ takes care to rename the default backend to 'django.db.backends.postgresql'
 original_backend = django.db.utils.load_backend(ORIGINAL_BACKEND)
 
@@ -45,6 +45,8 @@ class DatabaseWrapper(original_backend.DatabaseWrapper):
     Adds the capability to manipulate the search_path using set_tenant and set_schema_name
     """
     include_public_schema = True
+    custom_search_path = []
+    replace_search_path = False
 
     def __init__(self, *args, **kwargs):
         super(DatabaseWrapper, self).__init__(*args, **kwargs)
@@ -71,6 +73,11 @@ class DatabaseWrapper(original_backend.DatabaseWrapper):
         self.set_schema(tenant.schema_name, include_public)
         self.tenant = tenant
 
+    def set_search_path(self, custom_path):
+        self.custom_search_path = []
+        self.custom_search_path = custom_path
+        self.replace_search_path = True
+
     def set_schema(self, schema_name, include_public=True):
         """
         Main API method to current database schema,
@@ -79,6 +86,8 @@ class DatabaseWrapper(original_backend.DatabaseWrapper):
         self.tenant = FakeTenant(schema_name=schema_name)
         self.schema_name = schema_name
         self.include_public_schema = include_public
+        self.custom_search_path = []
+        self.replace_search_path = False
         self.set_settings_schema(schema_name)
         self.search_path_set = False
         # Content type can no longer be cached as public and tenant schemas
@@ -141,6 +150,9 @@ class DatabaseWrapper(original_backend.DatabaseWrapper):
                 search_paths = [self.schema_name]
 
             search_paths.extend(EXTRA_SEARCH_PATHS)
+
+            if self.replace_search_path:
+                search_paths = self.custom_search_path
 
             if name:
                 # Named cursor can only be used once
